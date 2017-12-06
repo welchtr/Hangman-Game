@@ -1,41 +1,79 @@
+/declare global variables in the game
 
+// array of words to guess from
+var wordBank = [
+  "BIGGIE", "JARULE", "TUPAC", "AALIYAH", "NAS", "BLACKSTREET", "USHER", "GINUWINE", "FUGEES", "MONICA", "TLC", "BRANDY", "SHYNE", "USHER"
+];
 
-// array of words to guess
+// create empty array to store the words we want the player to guess
 
-    var words_to_guess
-        words_to_guess = ['Biggie', 'JaRule', 'Brandy', 'Monica', 'TLC', 'SWV', 'Aaliyah', 'Nas', 'Blackstreet', 'Usher', 'Ginuwine', 'Tupac', 'Juvenile', 'Fugees', 'Mase']
+var words = "";
 
-// array of characters to choose from
+// create answer array to store the answer board (starting words as blanks the player will gradully fill in)
 
-    var availableCharacters
-          availableCharacters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', '1', '2', '3', '4', '5', '6', '7', '8', '9' ]
+var answerArray = [];
 
-// choose from list of random words
+// start the game initialization
 
-    var randomWord = words_to_guess[Math.floor(Math.random() * words_to_guess.length)];
+function init(){
+  // select a random word from wordBank
 
-    console.log(randomWord);
+  words = wordBank[Math.floor(Math.random() * wordBank.length)]
 
-// answer array
+  // set up answer array
+  answerArray = [];
+  for (var i = 0; i < words.length; i++) {
+    answerArray[i] = "_";
+  }
 
-    var answerArray = [];
+  document.getElementById('answer').innerHTML = answerArray.join(" ");
+  document.getElementById('message').innerHTML = "Type a letter to guess the artist!"
 
-    for (var i = 0; i < randomWord.length; i++) {
+  }
+init();
 
-     answerArray[i] = "_";
+function playerGuess(){
+  // get a guess from the player
+  var guess = document.getElementById('guess').value
+  var showThisMessage = "";
 
- }
+  if (guess.length !== 1){
+    showThisMessage = "Enter a single letter";
+  }
+  else {
+    // update the game with player input
+    var i = 0; // indexer into the array
+    for (i = 0; i <words.length; i++){
+      if (word[i]=== guess) {
+        answerArray[i] = guess;
+        showThisMessage = "Yes! +"+guess+" is in the answer";
+      }
+    }
 
-    var remainingLetters = randomWord.length;
+    // Update player unknown letters still missing
+    var remainingLetters = answerArray.length;
 
-// display word also showing players progress
+    //recount remaining letters
+    for (i = 0; i < answerArray.length; i ++ ) {
+      if answerArray[i] !== '_'){
+        remainingLetters -=1;
+      }
+      }
+      // if no letters remain - YOU WON!
+      if (remainingLetters == 0){
+        showThisMessage = "Hurray! You won!"
+      }
 
-    document.write(answerArray.join(" "));
+      // (otherwise) if we have no message to show, the guess is wrong
+       if (showThisMessage===""){
+         showThisMessage = "Sorry, no "+guess;
+       }
 
-  // player input
+       // update game
+       document.getElementById('answer'). innerHTML = answerArray.join(" ");
 
-    inputBox.addEventListener("keyup", function(event) {
-      var answerArray = event.target.value;
-      });
-
-      console.log();
+       // clear out last guess
+       document.getElementById('guess').value = "";
+}
+document.getElementById('message').innerHTML = showThisMessage
+}
