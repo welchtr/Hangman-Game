@@ -20,11 +20,13 @@ function init(){
 
   words = wordBank[Math.floor(Math.random() * wordBank.length)];
 
+  console.log(words);
+
   // set up answer array.
 
   answerArray = [];
   for (var i = 0; i < words.length; i++) {
-    answerArray[i] = "_";
+    answerArray[i] = " _ ";
   }
 
   document.getElementById('answer').innerHTML = answerArray.join('');
