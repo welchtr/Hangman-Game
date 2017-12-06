@@ -1,4 +1,4 @@
-/declare global variables in the game
+// declare global variables in the game
 
 // array of words to guess from
 var wordBank = [
@@ -18,16 +18,17 @@ var answerArray = [];
 function init(){
   // select a random word from wordBank
 
-  words = wordBank[Math.floor(Math.random() * wordBank.length)]
+  words = wordBank[Math.floor(Math.random() * wordBank.length)];
 
-  // set up answer array
+  // set up answer array.
+
   answerArray = [];
   for (var i = 0; i < words.length; i++) {
     answerArray[i] = "_";
   }
 
-  document.getElementById('answer').innerHTML = answerArray.join(" ");
-  document.getElementById('message').innerHTML = "Type a letter to guess the artist!"
+  document.getElementById('answer').innerHTML = answerArray.join('');
+  document.getElementById('message').innerHTML = "Type a letter to guess the artist!";
 
   }
 init();
@@ -37,14 +38,14 @@ function playerGuess(){
   var guess = document.getElementById('guess').value
   var showThisMessage = "";
 
-  if (guess.length !== 1){
+  if (guess.length === 1){
     showThisMessage = "Enter a single letter";
   }
   else {
     // update the game with player input
     var i = 0; // indexer into the array
     for (i = 0; i <words.length; i++){
-      if (word[i]=== guess) {
+      if (words[i]=== guess) {
         answerArray[i] = guess;
         showThisMessage = "Yes! +"+guess+" is in the answer";
       }
@@ -55,13 +56,13 @@ function playerGuess(){
 
     //recount remaining letters
     for (i = 0; i < answerArray.length; i ++ ) {
-      if answerArray[i] !== '_'){
+    if (answerArray[i] === '_') {
         remainingLetters -=1;
       }
       }
       // if no letters remain - YOU WON!
       if (remainingLetters == 0){
-        showThisMessage = "Hurray! You won!"
+        showThisMessage = "Hurray! You won!";
       }
 
       // (otherwise) if we have no message to show, the guess is wrong
@@ -70,10 +71,10 @@ function playerGuess(){
        }
 
        // update game
-       document.getElementById('answer'). innerHTML = answerArray.join(" ");
+       document.getElementById('answer').innerHTML = answerArray.join(" ");
 
        // clear out last guess
        document.getElementById('guess').value = "";
 }
-document.getElementById('message').innerHTML = showThisMessage
+document.getElementById('message').innerHTML = showThisMessage;
 }
